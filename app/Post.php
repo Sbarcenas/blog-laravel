@@ -8,6 +8,16 @@ use Illuminate\Database\Eloquent\Model;
 class Post extends Model
 {
     use Sluggable;
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'title', 'body', 'image', 'user_id',
+    ];
+
     /**
      * Return the sluggable configuration array for this model.
      *
@@ -26,5 +36,10 @@ class Post extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function getGetExcerptAttribute()
+    {
+        return substr($this->body, 0, 140);
     }
 }
